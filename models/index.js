@@ -26,14 +26,14 @@ var Page = db.define('page', {
       defaultValue: Sequelize.NOW
   }
 }, 
-// {
-//   getterMethods: {
-//      urlTitle:
-//         function(page, title){ 
-//             return '/wiki/'+ title; 
-//         }
-//      }
-// },
+{
+  getterMethods: {
+   
+        function(page, title){ 
+            return '/wiki/'+ urlTitle; 
+        }
+     }
+},
 {
   hooks: {
         beforeValidate: function generateUrlTitle (page, title) {
@@ -41,10 +41,10 @@ var Page = db.define('page', {
             if (page.title) {
                 // Removes all non-alphanumeric characters from title
                 // And make whitespace underscore
-                return page.title.replace(/\s+/g, '_').replace(/\W/g, '');
+                page.urlTitle =  page.title.replace(/\s+/g, '_').replace(/\W/g, '');
             } else {
                 // Generates random 5 letter string
-                return Math.random().toString(36).substring(2, 7);
+                page.urlTitle =  Math.random().toString(36).substring(2, 7);
             }
          }
      }
