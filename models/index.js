@@ -28,16 +28,12 @@ var Page = db.define('page', {
 }, 
 {
   getterMethods: {
-   
-        function(page, title){ 
-            return '/wiki/'+ urlTitle; 
+        route: function (){ 
+            return '/wiki/'+ this.urlTitle; 
         }
-     }
-},
-{
+     },
   hooks: {
-        beforeValidate: function generateUrlTitle (page, title) {
-            console.log(page.title);
+        beforeValidate: function generateUrlTitle (page, options) {
             if (page.title) {
                 // Removes all non-alphanumeric characters from title
                 // And make whitespace underscore
@@ -48,7 +44,6 @@ var Page = db.define('page', {
             }
          }
      }
-  
 });
 
 var User = db.define('user', {
@@ -63,11 +58,7 @@ var User = db.define('user', {
   }
 });
 
-
-
-
-
-
+Page.belongsTo(User, { as: 'author' });
 
 module.exports = {
   Page: Page,
